@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AppNews</string>
+    <string name="btn_guide_welcome">欢迎进入</string>
+    <string name="rb_home">首页</string>
+    <string name="rb_news">新闻</string>
+    <string name="gouwuche">购物车</string>
+    <string name="rb_set">设置</string>
+    <string name="rb_shop">商城</string>
 </resources>
