@@ -2,6 +2,8 @@ package com.sample.appnews;
 
 import android.app.Application;
 
+import com.sample.appnews.volley.VolleyManager;
+
 import org.xutils.x;
 
 /**
@@ -19,6 +21,8 @@ public class AppNewsApplication extends Application {
         //初始化utils
         x.Ext.init(this);
         x.Ext.setDebug(true); // 是否输出debug日志, 开启debug会影响性能.
+        //初始化volley
+        VolleyManager.init(this);
 
     }
 }

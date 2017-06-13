@@ -29,4 +29,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':SlidingMenu_library')
     compile project(':xutils')
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile project(':ViewPagerIndicator_library')
+    compile files('libs/glide-3.7.0.jar')
+    compile project(':PullToRefresh_library')
+    compile files('libs/volley.jar')
 }

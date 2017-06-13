@@ -2,6 +2,7 @@ package com.sample.appnews.activity;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.Window;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -52,11 +53,30 @@ public class MainActivity extends SlidingFragmentActivity {
 
     private void initFragment() {
         //得到事物 开启事物
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //替换布局
         ft.replace(R.id.fl_main_content, new ContentFragment(), MAIN_CONTENT_TAG);//主页
         ft.replace(R.id.fl_main_leftmenu, new LeftMenuFragment(), LEFTMENU_TAG);//左侧菜单
         //提交事务
         ft.commit();
+    }
+
+    /**
+     * 得到左侧菜单Fragment
+     *
+     * @return
+     */
+    public LeftMenuFragment getLeftMenuFragment() {
+        return (LeftMenuFragment) getSupportFragmentManager().findFragmentByTag(LEFTMENU_TAG);
+
+    }
+
+    /**
+     * 得到ContentFragment
+     *
+     * @return
+     */
+    public ContentFragment getContentFragment() {
+        return (ContentFragment) getSupportFragmentManager().findFragmentByTag(MAIN_CONTENT_TAG);
     }
 }

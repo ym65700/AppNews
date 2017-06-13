@@ -11,7 +11,7 @@ import org.xutils.common.util.LogUtil;
 
 /**
  * 作者：Administrator on 2017/6/1 22:23
- * 作用：
+ * 作用：设置页面
  */
 public class SettingPager extends BasePager {
     public SettingPager(Activity context) {

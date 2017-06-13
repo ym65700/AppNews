@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/title_red_bg">
+
     <ImageButton
         android:id="@+id/imgbtn_leftmenu"
         android:layout_width="wrap_content"
@@ -13,12 +14,62 @@
         android:src="@drawable/img_menu"
         android:visibility="gone" />
 
+    <ImageButton
+        android:id="@+id/imgbtn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/back"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="标题"
         android:textSize="23sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imgbtn_textsize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/icon_textsize"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/imgbtn_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/icon_share"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imgbtn_swich_list_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/icon_pic_grid_type"
+        android:visibility="gone"/>
+
+
 
 </RelativeLayout>

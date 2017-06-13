@@ -22,28 +22,31 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        rl_splash = (RelativeLayout) findViewById(R.id.rl_splash);
-        //渐变
-        AlphaAnimation aa = new AlphaAnimation(0, 1);
-        //持续时间
-        aa.setDuration(1500);
-        //动画结束后应适用其转换
-        aa.setFillAfter(true);
-        //缩放
-        ScaleAnimation sa = new ScaleAnimation(0, 1, 0, 1, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        sa.setDuration(1500);
-        sa.setFillAfter(true);
-        //旋转
-        RotateAnimation ra = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        ra.setDuration(1500);
-        ra.setFillAfter(true);
-        //添加三个动画没有先后顺序
-        AnimationSet set = new AnimationSet(false);
-        set.addAnimation(aa);
-        set.addAnimation(sa);
-        set.addAnimation(ra);
-        rl_splash.setAnimation(set);
-        set.setAnimationListener(new MyAnimationListener());
+//        rl_splash = (RelativeLayout) findViewById(R.id.rl_splash);
+//        //渐变
+//        AlphaAnimation aa = new AlphaAnimation(0, 1);
+//        //持续时间
+//        aa.setDuration(1500);
+//        //动画结束后应适用其转换
+//        aa.setFillAfter(true);
+//        //缩放
+//        ScaleAnimation sa = new ScaleAnimation(0, 1, 0, 1, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+//        sa.setDuration(1500);
+//        sa.setFillAfter(true);
+//        //旋转
+//        RotateAnimation ra = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+//        ra.setDuration(1500);
+//        ra.setFillAfter(true);
+//        //添加三个动画没有先后顺序
+//        AnimationSet set = new AnimationSet(false);
+//        set.addAnimation(aa);
+//        set.addAnimation(sa);
+//        set.addAnimation(ra);
+//        rl_splash.setAnimation(set);
+//        set.setAnimationListener(new MyAnimationListener());
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 

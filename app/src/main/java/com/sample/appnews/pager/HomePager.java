@@ -11,7 +11,7 @@ import org.xutils.common.util.LogUtil;
 
 /**
  * 作者：Administrator on 2017/6/1 22:23
- * 作用：
+ * 作用：主页面
  */
 public class HomePager extends BasePager {
     public HomePager(Activity context) {

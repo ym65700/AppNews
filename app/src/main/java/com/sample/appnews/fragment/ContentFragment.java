@@ -41,7 +41,6 @@ public class ContentFragment extends BaseFragment {
         //把视图注入到框架中 让contentfragment与view关联起来
         x.view().inject(ContentFragment.this, view);
         return view;
-
     }
 
     @Override
@@ -57,7 +56,7 @@ public class ContentFragment extends BaseFragment {
         vp_content.setAdapter(new ContentFragmentAdpter(basePagers));
         //RadioGroup设置点击监听
         rg_main.setOnCheckedChangeListener(new MyOnCheckedChangeListener());
-        //viewpager设置滑动监听
+        //viewpager设置页面监听
         vp_content.addOnPageChangeListener(new MyOnPageChangeListener());
         //默认设置首页
         rg_main.check(R.id.rb_home);
@@ -67,6 +66,14 @@ public class ContentFragment extends BaseFragment {
         isEnableSlidingMenu(SlidingMenu.TOUCHMODE_NONE);
     }
 
+    /**
+     * 得到新闻中心
+     *
+     * @return
+     */
+    public NewsCenterPager getNewsCenterPager() {
+        return (NewsCenterPager) basePagers.get(1);
+    }
 
     private class MyOnCheckedChangeListener implements RadioGroup.OnCheckedChangeListener {
         @Override
@@ -131,5 +138,6 @@ public class ContentFragment extends BaseFragment {
     private void isEnableSlidingMenu(int touchmodeFullscreen) {
         MainActivity mainActivity = (MainActivity) context;
         mainActivity.getSlidingMenu().setTouchModeAbove(touchmodeFullscreen);
+
     }
 }
