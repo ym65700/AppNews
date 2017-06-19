@@ -14,6 +14,7 @@ import com.sample.appnews.activity.MainActivity;
 import com.sample.appnews.base.MenuDetaiBasePager;
 import com.sample.appnews.bean.NewsCenterPagerBean;
 import com.sample.appnews.menudatailpager.tabledatailpager.TabDetailPager;
+import com.sample.appnews.menudatailpager.tabledatailpager.TopicDetailPager;
 import com.viewpagerindicator.TabPageIndicator;
 
 import org.xutils.common.util.LogUtil;
@@ -43,7 +44,7 @@ public class TopicMenuDetailPager extends MenuDetaiBasePager {
     /**
      * 页签页面的集合-页面
      */
-    private ArrayList<TabDetailPager> tabDetailPagers;
+    private ArrayList<TopicDetailPager> topicDetailPagers;
 
     public TopicMenuDetailPager(Context context, NewsCenterPagerBean.DataBean dataBean) {
         super(context);
@@ -70,9 +71,9 @@ public class TopicMenuDetailPager extends MenuDetaiBasePager {
         super.initData();
         LogUtil.e("新闻详情页面数据被初始化了..");
         //准备新闻详情页面的数据
-        tabDetailPagers = new ArrayList<>();
+        topicDetailPagers = new ArrayList<>();
         for (int i = 0; i < children.size(); i++) {
-            tabDetailPagers.add(new TabDetailPager(context, children.get(i)));
+            topicDetailPagers.add(new TopicDetailPager(context, children.get(i)));
 
         }
         //viewpager设置适配器
@@ -108,7 +109,7 @@ public class TopicMenuDetailPager extends MenuDetaiBasePager {
     private class MyPagerAdapter extends PagerAdapter {
         @Override
         public int getCount() {
-            return tabDetailPagers.size();
+            return topicDetailPagers.size();
         }
 
         @Override
@@ -123,9 +124,9 @@ public class TopicMenuDetailPager extends MenuDetaiBasePager {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            TabDetailPager tabDetailPager = tabDetailPagers.get(position);
-            View rootView = tabDetailPager.rootView;
-            tabDetailPager.initData();//初始化数据
+            TopicDetailPager topicDetailPager = topicDetailPagers.get(position);
+            View rootView = topicDetailPager.rootView;
+            topicDetailPager.initData();//初始化数据
             container.addView(rootView);
             return rootView;
         }

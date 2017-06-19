@@ -123,15 +123,7 @@ public class LeftMenuFragment extends BaseFragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
-//            View view = View.inflate(context, R.layout.item_leftmenu, null);
-//            TextView textView = (TextView) view.findViewById(R.id.txt);
-//            textView.setText(data.get(position).getTitle());
-
-           // TextView textView = (TextView) View.inflate(context, R.layout.item_leftmenu,null);
-            TextView textView=new TextView(context);
-            textView.setTextSize(23);
-            textView.setPadding(20,20,20,20);
+            TextView textView = (TextView) View.inflate(context, R.layout.item_leftmenu, null);
             textView.setText(data.get(position).getTitle());
             textView.setEnabled(position == prePosition);
             return textView;

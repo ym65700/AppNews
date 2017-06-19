@@ -179,7 +179,7 @@ public class NewsCenterPager extends BasePager {
         detaiBasePagers.add(new NewsMenuDetailPager(context, data.get(0)));//新闻详情页面
         detaiBasePagers.add(new TopicMenuDetailPager(context, data.get(0)));//专题详情页面
         detaiBasePagers.add(new PhotosMenuDetailPager(context, data.get(2)));//图组详情页面
-        detaiBasePagers.add(new InteracMenuDetailPager(context, data.get(3)));//互动详情页面
+        detaiBasePagers.add(new InteracMenuDetailPager(context, data.get(2)));//互动详情页面
         //把数据传递给左侧菜单
         leftMenuFragment.setData(data);
 
@@ -268,7 +268,6 @@ public class NewsCenterPager extends BasePager {
             //初始化数据
             menuDetaiBasePager.initData();
             fl_page_content.addView(rootView);
-
             if (position == 2) {
                 imgbtn_swich_list_grid.setVisibility(View.VISIBLE);
                 imgbtn_swich_list_grid.setOnClickListener(new View.OnClickListener() {

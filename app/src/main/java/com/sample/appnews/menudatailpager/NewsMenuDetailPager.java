@@ -1,6 +1,7 @@
 package com.sample.appnews.menudatailpager;
 
 import android.content.Context;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -31,8 +32,10 @@ import java.util.List;
 public class NewsMenuDetailPager extends MenuDetaiBasePager {
     @ViewInject(R.id.vp_news_detail)
     private ViewPager vp_news_detail;
-    @ViewInject(R.id.indicator)
-    private TabPageIndicator indicator;
+    //    @ViewInject(R.id.indicator)
+//    private TabPageIndicator indicator;
+    @ViewInject(R.id.tabLayout)
+    private TabLayout tabLayout;
     @ViewInject(R.id.ib_tab_next)
     private ImageButton ib_tab_next;
     /**
@@ -76,28 +79,16 @@ public class NewsMenuDetailPager extends MenuDetaiBasePager {
         }
         //viewpager设置适配器
         vp_news_detail.setAdapter(new MyPagerAdapter());
+        //tabLayout和viewpager相关联
+        tabLayout.setupWithViewPager(vp_news_detail);
+
+        vp_news_detail.addOnPageChangeListener(new MyPagerChangeListener());
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
         //viewpagerIndicator和viewpager相关联
-        indicator.setViewPager(vp_news_detail);
-        //viewpagerIndicator设置监听
-        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                //判断首个页面才能启动侧滑菜单
-                if (0 == position) {
-                    isEnableSlidingMenu(SlidingMenu.TOUCHMODE_FULLSCREEN);
-                } else {
-                    isEnableSlidingMenu(SlidingMenu.TOUCHMODE_NONE);
-                }
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
+//        indicator.setViewPager(vp_news_detail);
+//        //viewpagerIndicator设置监听
+//        indicator.setOnPageChangeListener(new MyPagerChangeListener());
 
     }
 
@@ -143,5 +134,27 @@ public class NewsMenuDetailPager extends MenuDetaiBasePager {
         MainActivity mainActivity = (MainActivity) context;
         mainActivity.getSlidingMenu().setTouchModeAbove(touchmodeFullscreen);
 
+    }
+
+    private class MyPagerChangeListener implements ViewPager.OnPageChangeListener {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            //判断首个页面才能启动侧滑菜单
+            if (0 == position) {
+                isEnableSlidingMenu(SlidingMenu.TOUCHMODE_FULLSCREEN);
+            } else {
+                isEnableSlidingMenu(SlidingMenu.TOUCHMODE_NONE);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
     }
 }

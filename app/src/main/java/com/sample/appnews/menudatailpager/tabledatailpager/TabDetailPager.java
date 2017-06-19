@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ import com.sample.appnews.bean.TabDetailPagerBean;
 import com.sample.appnews.view.HorizontalScrollViewPager;
 import com.sample.appnews.utils.CacheUtils;
 import com.sample.appnews.utils.Constants;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.xutils.common.Callback;
 import org.xutils.common.util.DensityUtil;
@@ -40,6 +43,9 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Request;
 
 /**
  * 作者：Administrator on 2017/6/4 11:51
@@ -141,37 +147,45 @@ public class TabDetailPager extends MenuDetaiBasePager {
     private void getDataFromNet() {
         preposition = 0;
         LogUtil.e("url地址===" + url);
-        RequestParams params = new RequestParams(url);
-        x.http().get(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                LogUtil.e(childrenBean.getTitle() + "页面请求成功====" + result);
-                //缓存数据
-                CacheUtils.putString(context, "tabDetailpager", result);
-                processData(result);
-                //隐藏下拉刷新控件-重写显示数据，更新时间
-//                listview.onRefreshFinish(true);
-                mPullToRefreshListView.onRefreshComplete();
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                LogUtil.e(childrenBean.getTitle() + "使用xUtils3联网请求失败==" + ex.getMessage());
-                //隐藏下拉刷新控件 - 不更新时间，只是隐藏
-//                listview.onRefreshFinish(false);
-                mPullToRefreshListView.onRefreshComplete();
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-                LogUtil.e(childrenBean.getTitle() + "使用xUtils3-onCancelled==" + cex.getMessage());
-            }
-
-            @Override
-            public void onFinished() {
-                LogUtil.e(childrenBean.getTitle() + "使用xUtils3-onFinished");
-            }
-        });
+        //ok网络请求
+        OkHttpUtils
+                .get()
+                .url(url)
+                .id(100)
+                .build()
+                .execute(new MyStringCallback());
+        //xutil网络请求
+//        RequestParams params = new RequestParams(url);
+//        x.http().get(params, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//                LogUtil.e(childrenBean.getTitle() + "页面请求成功====" + result);
+//                //缓存数据
+//                CacheUtils.putString(context, "tabDetailpager", result);
+//                processData(result);
+//                //隐藏下拉刷新控件-重写显示数据，更新时间
+////                listview.onRefreshFinish(true);
+//                mPullToRefreshListView.onRefreshComplete();
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//                LogUtil.e(childrenBean.getTitle() + "使用xUtils3联网请求失败==" + ex.getMessage());
+//                //隐藏下拉刷新控件 - 不更新时间，只是隐藏
+////                listview.onRefreshFinish(false);
+//                mPullToRefreshListView.onRefreshComplete();
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//                LogUtil.e(childrenBean.getTitle() + "使用xUtils3-onCancelled==" + cex.getMessage());
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//                LogUtil.e(childrenBean.getTitle() + "使用xUtils3-onFinished");
+//            }
+//        });
     }
 
     private void getMoreDataFromNet() {
@@ -282,10 +296,8 @@ public class TabDetailPager extends MenuDetaiBasePager {
         public void run() {
             //发送空消息
             internalHandler.sendEmptyMessage(0);
-
         }
     }
-
 
     /**
      * 添加红点
@@ -403,18 +415,18 @@ public class TabDetailPager extends MenuDetaiBasePager {
         @Override
         public void onPageScrollStateChanged(int state) {
             if (state == ViewPager.SCROLL_STATE_DRAGGING) {
-                LogUtil.e("拖拽");
+                //LogUtil.e("拖拽");
                 isDragging = true;
                 //拖拽要移除消息
                 internalHandler.removeCallbacksAndMessages(null);
             } else if (state == ViewPager.SCROLL_STATE_SETTLING) {
-                LogUtil.e("惯性");
+                //LogUtil.e("惯性");
                 isDragging = false;
                 internalHandler.removeCallbacksAndMessages(null);
                 internalHandler.postDelayed(new MyRunnable(), 4000);
 
             } else if (state == ViewPager.SCROLL_STATE_IDLE) {
-                LogUtil.e("静止");
+                //LogUtil.e("静止");
                 isDragging = false;
                 internalHandler.removeCallbacksAndMessages(null);
                 internalHandler.postDelayed(new MyRunnable(), 4000);
@@ -519,5 +531,45 @@ public class TabDetailPager extends MenuDetaiBasePager {
         }
     }
 
+    public class MyStringCallback extends StringCallback {
+        @Override
+        public void onBefore(Request request, int id) {
 
+        }
+
+        @Override
+        public void onAfter(int id) {
+
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id) {
+            e.printStackTrace();
+            LogUtil.e(childrenBean.getTitle() + "使用ok联网请求失败==" + e.getMessage());
+//                //隐藏下拉刷新控件 - 不更新时间，只是隐藏
+////                listview.onRefreshFinish(false);
+            mPullToRefreshListView.onRefreshComplete();
+
+        }
+
+        @Override
+        public void onResponse(String result, int id) {
+            //Toast.makeText(MainActivity.this, "http", Toast.LENGTH_SHORT).show();
+            LogUtil.e(childrenBean.getTitle() + "页面请求成功====" + result);
+//                //缓存数据
+            CacheUtils.putString(context, "tabDetailpager", result);
+            processData(result);
+            //隐藏下拉刷新控件-重写显示数据，更新时间
+//                    listview.onRefreshFinish(true);
+            mPullToRefreshListView.onRefreshComplete();
+            switch (id) {
+                case 100:
+                    Toast.makeText(context, "http", Toast.LENGTH_SHORT).show();
+                    break;
+                case 101:
+                    Toast.makeText(context, "https", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    }
 }
