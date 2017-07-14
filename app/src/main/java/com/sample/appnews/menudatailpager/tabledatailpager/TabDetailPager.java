@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.sample.appnews.R;
+import com.sample.appnews.activity.MainActivity;
 import com.sample.appnews.activity.NewsDetailActivity;
 import com.sample.appnews.base.MenuDetaiBasePager;
 import com.sample.appnews.bean.NewsCenterPagerBean;
@@ -153,7 +154,40 @@ public class TabDetailPager extends MenuDetaiBasePager {
                 .url(url)
                 .id(100)
                 .build()
-                .execute(new MyStringCallback());
+                .execute(new StringCallback() {
+                             @Override
+                             public void onError(Call call, Exception e, int id) {
+                                 e.printStackTrace();
+                                 LogUtil.e(childrenBean.getTitle() + "使用ok联网请求失败==" + e.getMessage());
+//                //隐藏下拉刷新控件 - 不更新时间，只是隐藏
+////                listview.onRefreshFinish(false);
+                                 mPullToRefreshListView.onRefreshComplete();
+//
+                             }
+
+                             @Override
+                             public void onResponse(String result, int id) {
+                                 //Toast.makeText(MainActivity.this, "http", Toast.LENGTH_SHORT).show();
+                                 LogUtil.e(childrenBean.getTitle() + "页面请求成功====" + result);
+//                                  //缓存数据
+                                 CacheUtils.putString(context, "tabDetailpager", result);
+                                 processData(result);
+                                 //隐藏下拉刷新控件-重写显示数据，更新时间
+//                               listview.onRefreshFinish(true);
+                                 mPullToRefreshListView.onRefreshComplete();
+                                 switch (id) {
+                                     case 100:
+                                         Toast.makeText(context, "http", Toast.LENGTH_SHORT).show();
+                                         break;
+                                     case 101:
+                                         Toast.makeText(context, "https", Toast.LENGTH_SHORT).show();
+                                         break;
+                                 }
+                             }
+
+                         }
+
+                );
         //xutil网络请求
 //        RequestParams params = new RequestParams(url);
 //        x.http().get(params, new Callback.CommonCallback<String>() {
@@ -531,45 +565,45 @@ public class TabDetailPager extends MenuDetaiBasePager {
         }
     }
 
-    public class MyStringCallback extends StringCallback {
-        @Override
-        public void onBefore(Request request, int id) {
-
-        }
-
-        @Override
-        public void onAfter(int id) {
-
-        }
-
-        @Override
-        public void onError(Call call, Exception e, int id) {
-            e.printStackTrace();
-            LogUtil.e(childrenBean.getTitle() + "使用ok联网请求失败==" + e.getMessage());
-//                //隐藏下拉刷新控件 - 不更新时间，只是隐藏
-////                listview.onRefreshFinish(false);
-            mPullToRefreshListView.onRefreshComplete();
-
-        }
-
-        @Override
-        public void onResponse(String result, int id) {
-            //Toast.makeText(MainActivity.this, "http", Toast.LENGTH_SHORT).show();
-            LogUtil.e(childrenBean.getTitle() + "页面请求成功====" + result);
-//                //缓存数据
-            CacheUtils.putString(context, "tabDetailpager", result);
-            processData(result);
-            //隐藏下拉刷新控件-重写显示数据，更新时间
-//                    listview.onRefreshFinish(true);
-            mPullToRefreshListView.onRefreshComplete();
-            switch (id) {
-                case 100:
-                    Toast.makeText(context, "http", Toast.LENGTH_SHORT).show();
-                    break;
-                case 101:
-                    Toast.makeText(context, "https", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
-    }
+//    public class MyStringCallback extends StringCallback {
+//        @Override
+//        public void onBefore(Request request, int id) {
+//
+//        }
+//
+//        @Override
+//        public void onAfter(int id) {
+//
+//        }
+//
+//        @Override
+//        public void onError(Call call, Exception e, int id) {
+//            e.printStackTrace();
+//            LogUtil.e(childrenBean.getTitle() + "使用ok联网请求失败==" + e.getMessage());
+////                //隐藏下拉刷新控件 - 不更新时间，只是隐藏
+//////                listview.onRefreshFinish(false);
+//            mPullToRefreshListView.onRefreshComplete();
+//
+//        }
+//
+//        @Override
+//        public void onResponse(String result, int id) {
+//            //Toast.makeText(MainActivity.this, "http", Toast.LENGTH_SHORT).show();
+//            LogUtil.e(childrenBean.getTitle() + "页面请求成功====" + result);
+////                //缓存数据
+//            CacheUtils.putString(context, "tabDetailpager", result);
+//            processData(result);
+//            //隐藏下拉刷新控件-重写显示数据，更新时间
+////                    listview.onRefreshFinish(true);
+//            mPullToRefreshListView.onRefreshComplete();
+//            switch (id) {
+//                case 100:
+//                    Toast.makeText(context, "http", Toast.LENGTH_SHORT).show();
+//                    break;
+//                case 101:
+//                    Toast.makeText(context, "https", Toast.LENGTH_SHORT).show();
+//                    break;
+//            }
+//        }
+//    }
 }
